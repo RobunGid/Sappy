@@ -61,33 +61,25 @@ export default function Home() {
 						<p className='text-sm text-muted-foreground mb-4'>
 							Trusted by hundreds of users worldwide
 						</p>
-
 						<div className='flex justify-center items-center gap-8 text-muted-foreground'>
 							<div className='text-center'>
 								<div className='text-2xl font-bold text-foreground'>
 									100+
 								</div>
-
 								<div className='text-sm'>Active Users</div>
 							</div>
-
 							<div className='w-px h-8 bg-border'></div>
-
 							<div className='text-center'>
 								<div className='text-2xl font-bold text-foreground'>
 									10K+
 								</div>
-
 								<div className='text-sm'>Messages Sent</div>
 							</div>
-
 							<div className='w-px h-8 bg-border'></div>
-
 							<div className='text-center'>
 								<div className='text-2xl font-bold text-foreground'>
 									99.9%
 								</div>
-
 								<div className='text-sm'>Uptime</div>
 							</div>
 						</div>
