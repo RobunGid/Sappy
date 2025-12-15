@@ -22,7 +22,20 @@ export default function Dashboard() {
 	const { setOpen } = useSidebar();
 
 	const handleCall = () => {};
-	const handleLeaveChat = () => {};
+	const handleLeaveChat = async () => {
+		if (!channel || !user?.id) return;
+
+		const confirm = window.confirm('Are you sure you want to leave the chat?');
+		if (!confirm) return;
+
+		try {
+			await channel.removeMembers([user.id]);
+			setActiveChannel(undefined);
+			router.push('/dashboard');
+		} catch (error) {
+			console.error('Error leaving chat: ', error);
+		}
+	};
 
 	return (
 		<div className='flex flex-col w-full flex-1'>
