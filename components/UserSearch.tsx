@@ -5,7 +5,9 @@ import { useUserSearch } from '@/hooks/useUserSearch';
 import { cn } from '@/lib/utils';
 import { useUser } from '@clerk/nextjs';
 import { Input } from './ui/input';
-import { Search, X } from 'lucide-react';
+import { Mail, Search, UserIcon, Users, X } from 'lucide-react';
+import { InlineSpinner } from './LoadingSpinner';
+import Image from 'next/image';
 
 interface UserSearchProps {
 	onSelectUser: (user: Doc<'users'>) => void;
@@ -55,6 +57,65 @@ export const UserSearch = ({
 					</button>
 				)}
 			</div>
+			{searchTerm.trim() && (
+				<div className='mt-2 bg-card border border-border rounded-lg shadow-lg max-h-96 overflow-y-auto'>
+					{isLoading ? (
+						<div className='p-4 text-center text-muted-foreground'>
+							<div className='flex items-center justify-center space-x-2'>
+								<InlineSpinner size='sm' />
+								<span>Searching...</span>
+							</div>
+						</div>
+					) : filteredResults.length === 0 ? (
+						<div className='p-4 text-center text-muted-foreground'>
+							<UserIcon className='h-8 w-8 mx-auto mb-2 opacity-50' />
+							<p>No users found matching &quot;{searchTerm}&quot;</p>
+						</div>
+					) : (
+						<div className='py-2'>
+							{filteredResults.map((user) => (
+								<button
+									key={user._id}
+									onClick={() => handleSelectUser(user)}
+									className={cn(
+										'w-full px-4 py-3 text-left hover:bg-accent transition colors',
+										'border-b border-border last:border-b-0',
+										'focus:outline-none focus:bg-accent'
+									)}
+								>
+									<div className='flex items-center space-x-3'>
+										<div className='relative'>
+											<Image
+												src={user.imageUrl}
+												alt={user.name}
+												width={40}
+												height={40}
+												className='h-10 w-10 rounded-full object-cover ring-2 ring-border'
+											/>
+										</div>
+										<div className='flex-1'>
+											<div className='flex items-center space-x-2'>
+												<p className='font-medium text-foreground truncate'>
+													{user.name}
+												</p>
+											</div>
+											<div className='flex items-center space-x-1 mt-1'>
+												<Mail className='h-3 w-3 text-muted-foreground' />
+												<p className='text-sm text-muted-foreground truncate'>
+													{user.email}
+												</p>
+											</div>
+										</div>
+										<div className='flex shrink-0'>
+											<div className='h-2 w-2 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity'></div>
+										</div>
+									</div>
+								</button>
+							))}
+						</div>
+					)}
+				</div>
+			)}
 		</div>
 	);
 };
