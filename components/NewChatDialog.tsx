@@ -16,6 +16,9 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 import { UserSearch } from './UserSearch';
+import Image from 'next/image';
+import { XIcon } from 'lucide-react';
+import { Input } from './ui/input';
 
 interface NewChatDialogProps {
 	children: ReactNode;
@@ -59,6 +62,70 @@ export const NewChatDialog = ({ children }: NewChatDialogProps) => {
 				</DialogHeader>
 				<div className='space-y-4'>
 					<UserSearch onSelectUser={handleSelectUser} className='w-full' />
+
+					{selectedUsers.length > 0 && (
+						<div className='space-y-3'>
+							<h4 className='text-sm font-medium text-foreground'>
+								Selected Users ({selectedUsers.length})
+							</h4>
+							<div className='space-y-2 max-h-[200px] overflow-y-auto'>
+								{selectedUsers.map((user) => (
+									<div
+										key={user._id}
+										className='flex items-center justify-between p-2 bg-muted/50 border border-border rounded-lg'
+									>
+										<div className='flex items-center space-x-2'>
+											<Image
+												src={user.imageUrl}
+												alt={user.name}
+												width={24}
+												height={24}
+												className='h-6 w-6 rounded-full object-cover'
+											/>
+											<div className='min-w-0 flex-1'>
+												<p className='text-sm font-medium text-foreground truncate'>
+													{user.name}
+												</p>
+												<p className='text-xs text-muted-foreground truncate'>
+													{user.name}
+												</p>
+											</div>
+										</div>
+										<button
+											onClick={() => removeUser(user._id)}
+											className='text-muted-foreground hover:text-destructive transition-colors p-1'
+										>
+											<XIcon className='h-4 w-4' />
+										</button>
+									</div>
+								))}
+							</div>
+							{selectedUsers.length > 1 && (
+								<div className='space-y-2'>
+									<label
+										htmlFor='groupName'
+										className='text-sm font-medium text-foreground'
+									>
+										Group Name (Optional)
+									</label>
+									<Input
+										id='groupName'
+										type='text'
+										placeholder='Enter a name for your group chat'
+										value={groupName}
+										onChange={(event) =>
+											setGroupName(event.target.value)
+										}
+										className='w-full'
+									/>
+									<p className='text-xs text-muted-foreground'>
+										Leave empty to user default name: &quot; Group
+										chat ({selectedUsers.length + 1} members)&quot;
+									</p>
+								</div>
+							)}
+						</div>
+					)}
 				</div>
 			</DialogContent>
 		</Dialog>
