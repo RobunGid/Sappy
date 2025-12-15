@@ -21,7 +21,11 @@ export default function Dashboard() {
 	const { channel, setActiveChannel } = useChatContext();
 	const { setOpen } = useSidebar();
 
-	const handleCall = () => {};
+	const handleCall = () => {
+		if (!channel) return;
+		router.push(`/dashboard/video-call/${channel.id}`);
+		setOpen(false);
+	};
 	const handleLeaveChat = async () => {
 		if (!channel || !user?.id) return;
 
