@@ -15,6 +15,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
+import { UserSearch } from './UserSearch';
 
 interface NewChatDialogProps {
 	children: ReactNode;
