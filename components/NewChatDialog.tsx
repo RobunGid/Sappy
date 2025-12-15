@@ -7,7 +7,6 @@ import { ReactNode, useState } from 'react';
 import { useChatContext } from 'stream-chat-react';
 import {
 	Dialog,
-	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogFooter,
@@ -19,6 +18,7 @@ import { UserSearch } from './UserSearch';
 import Image from 'next/image';
 import { XIcon } from 'lucide-react';
 import { Input } from './ui/input';
+import { Button } from './ui/button';
 
 interface NewChatDialogProps {
 	children: ReactNode;
@@ -36,6 +36,22 @@ export const NewChatDialog = ({ children }: NewChatDialogProps) => {
 		if (!selectedUsers.find((u) => u._id === user._id)) {
 			setSelectedUsers((prev) => [...prev, user]);
 		}
+	};
+
+	const handleCreateChat = async () => {
+		const totalMembers = selectedUsers.length + 1;
+		const isGroupChat = totalMembers > 2;
+
+		const channel = await createNewChat({
+			members: [user?.id as string, ...selectedUsers.map((user) => user.userId)],
+			createdBy: user?.id as string,
+			groupName: isGroupChat ? groupName.trim() || undefined : undefined,
+		});
+
+		setActiveChannel(channel);
+		setSelectedUsers([]);
+		setGroupName('');
+		setOpen(false);
 	};
 
 	const removeUser = (userId: string) => {
@@ -127,6 +143,20 @@ export const NewChatDialog = ({ children }: NewChatDialogProps) => {
 						</div>
 					)}
 				</div>
+				<DialogFooter>
+					<Button variant='outline' onClick={() => setOpen(false)}>
+						Cancel
+					</Button>
+					<Button
+						disabled={selectedUsers.length === 0}
+						onClick={handleCreateChat}
+					>
+						{selectedUsers.length > 1 &&
+							`Create Group Chat (${selectedUsers.length + 1} members)`}
+						{selectedUsers.length === 1 && 'Start Chat'}
+						{selectedUsers.length === 0 && 'Create Chat'}
+					</Button>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	);
