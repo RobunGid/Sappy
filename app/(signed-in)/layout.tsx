@@ -9,6 +9,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/s
 
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
+import 'stream-chat-react/dist/css/v2/index.css';
 
 export default function Layout({ children }: { children: ReactNode }) {
 	return (

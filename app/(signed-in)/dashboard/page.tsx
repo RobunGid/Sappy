@@ -44,13 +44,16 @@ export default function Dashboard() {
 									variant='outline'
 									onClick={handleLeaveChat}
 									className='text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950'
-								></Button>
+								>
+									Leave Chat
+								</Button>
 							</div>
-							<MessageList />
+						</div>
 
-							<div className='sticky bottom-0 w-full'>
-								<MessageInput />
-							</div>
+						<MessageList />
+
+						<div className='sticky bottom-0 w-full'>
+							<MessageInput />
 						</div>
 					</Window>
 					<Thread />
