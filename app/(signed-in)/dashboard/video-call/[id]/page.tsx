@@ -11,7 +11,7 @@ import {
 	useCallStateHooks,
 } from '@stream-io/video-react-sdk';
 import { Check, Copy } from 'lucide-react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function VideoCall() {
@@ -108,7 +108,7 @@ export default function VideoCall() {
 										className={cn(
 											'flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg',
 											'transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500',
-											'focus:ring-offset-2 whitespace-nowrap'
+											'focus:ring-offset-2 whitespace-nowrap cursor-pointer'
 										)}
 									>
 										{copied ? (
